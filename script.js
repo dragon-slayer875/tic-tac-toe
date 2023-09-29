@@ -4,9 +4,9 @@ const gameBoard = (() => {
 })();
 
 const displayController = (() => {
-    const tiles = document.querySelectorAll('.tile');
+    const _tiles = document.querySelectorAll('.tile');
     const update = () => {
-        tiles.forEach(element => {
+        _tiles.forEach(element => {
         element.textContent = gameBoard.entries[element.dataset.id];
     })};
     return {update};
