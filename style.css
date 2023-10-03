@@ -21,6 +21,7 @@ body {
         /* Style for grid items (children) */
 .tile {
     background-color: #3498db;
+    border: none;
     color: #fff;
     padding: 20px;
     font-size: 24px;
