@@ -73,3 +73,28 @@ h1 {
     align-items: center;
     justify-items: center;
 }
+
+dialog {
+    border-radius: 10px;
+    box-shadow: 1.5px 1.5px #000;
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dreset {
+    background-color: #353dcf;
+    padding: 5px;
+    color: #fff;
+    width: 100%;
+}
+
+.dreset:hover {
+    background-color: #fff;
+    color: #3498db;
+    cursor: pointer;
+}

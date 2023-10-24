@@ -98,7 +98,7 @@ const gameBoard = (() => {
         }
         makeBoard();
     }
-    return {clearBoard, makeBoard, _board};
+    return {clearBoard, makeBoard};
 })();
 
 const player = (playerChar) => {
