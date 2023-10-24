@@ -9,19 +9,14 @@
 </head>
 <body>
     <div class="header">
-        <button class="charChoice">X</button>
-        <button class="charChoice">O</button>
+        <h1>Tic Tac Toe</h1>
+        <div class="buttons">
+            <button class="charChoice user">X</button>
+            <button class="charChoice">O</button>
+            <button class="reset" onclick="gameBoard.clearBoard()">Reset</button>
+        </div>
     </div>
     <div class="canvas">
-        <button class="tile" data-id="0"></button>
-        <button class="tile" data-id="1"></button>
-        <button class="tile" data-id="2"></button>
-        <button class="tile" data-id="3"></button>
-        <button class="tile" data-id="4"></button>
-        <button class="tile" data-id="5"></button>
-        <button class="tile" data-id="6"></button>
-        <button class="tile" data-id="7"></button>
-        <button class="tile" data-id="8"></button>
     </div>
 </body>
 </html>
