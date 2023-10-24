@@ -2,8 +2,6 @@
 
 body {
     display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 20px;
     font-family: 'Montserrat', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0px;
     padding: 0px;
@@ -11,7 +9,7 @@ body {
 
 .header {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     justify-items: center;
     gap: 20px;
     background-color: #3498db;
@@ -27,7 +25,7 @@ body {
     justify-self: center;
 }
 
-.buttons button {
+.button {
     border: solid 1px #fff;
     background-color: #3498db;
     color: #fff;
@@ -36,10 +34,15 @@ body {
     font-size: 24px;
 }
 
-.buttons button:hover {
+.button:hover {
     background-color: #fff;
     color: #3498db;
     cursor: pointer;
+}
+
+.user {
+    background-color: #fff;
+    color: #3498db;
 }
 
 h1 {
@@ -49,10 +52,18 @@ h1 {
     padding: 0px;
 }
 
+h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px;
+}
+
 .canvas {
     align-self: center;
     justify-self: center;
     display: grid;
+    margin-top: 100px;
     grid-template-columns: repeat(3, 1fr); 
     grid-template-rows: repeat(3, 1fr);    
     gap: 10px; 

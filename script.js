@@ -1,6 +1,6 @@
 const gameBoard = (() => {
     const _canvas = document.querySelector('.canvas');
-    let board = [new Array(3), new Array(3), new Array(3)];
+    let _board = [new Array(3), new Array(3), new Array(3)];
     let _tiles = []
     const _getTiles = () => {
         _tiles = Array.from(document.querySelectorAll('.tile'));
@@ -10,7 +10,7 @@ const gameBoard = (() => {
         return _randomTile;
     }
     const _moveComputer = (target, row, col, char) => {
-        board[row][col] = char;
+        _board[row][col] = char;
         target.textContent = char;
         _tiles.splice(_tiles.indexOf(target), 1);
         }
@@ -18,7 +18,7 @@ const gameBoard = (() => {
         if (target.textContent) {
             return;
         }
-        board[row][col] = char;
+        _board[row][col] = char;
         target.textContent = char;
         _tiles.splice(_tiles.indexOf(target), 1);
         if (_tiles.length == 0) {
@@ -56,24 +56,28 @@ const gameBoard = (() => {
     }
     const clearBoard = () => {
         for (let i = 0; i < 3; i++) {
-            board[i] = new Array(3);
+            _board[i] = new Array(3);
         }
         makeBoard();
     }
-    return {board, clearBoard, makeBoard, _getRandomTile, _tiles};
+    return {clearBoard, makeBoard};
 })();
 
 const player = (playerChar) => {
-    return {playerChar}
+    const setUserChar = (char) => {
+        user.playerChar = char;
+        computer.playerChar = char == 'X' ? 'O' : 'X';
+    }
+    return {playerChar, setUserChar}
 }
 
 const user = player('X');
 const computer = player('O');
 
 const displayController = (() => {
+    const _charButtons = document.querySelectorAll('.char');
     const _message = document.querySelector('.message');
-    const _startBtn = document.querySelector('.start');
-    const _clearBtn = document.querySelector('.clear');
+    const _clearBtn = document.querySelector('.reset');
     const _score = document.querySelector('.score');
     const _updateMessage = (msg) => {
         _message.textContent = msg;
@@ -82,21 +86,25 @@ const displayController = (() => {
         _score.textContent = score;
     }
     const _addListeners = () => {
-        _startBtn.addEventListener('click', () => {
-            gameBoard.clearBoard();
-            _updateMessage('Game in progress');
-            _startBtn.disabled = true;
-        })
         _clearBtn.addEventListener('click', () => {
             gameBoard.clearBoard();
-            _updateMessage('Game not started');
-            _startBtn.disabled = false;
         })
+        _charButtons.forEach(elem => {
+            elem.addEventListener('click', (e) => {
+                document.querySelector('.user').classList.remove('user');
+                elem.classList.toggle('user');
+                user.setUserChar(e.target.textContent);
+                gameBoard.clearBoard();
+            })
+        }
+    )
     }
     const init = () => {
-        _updateMessage('Game not started');
         _addListeners();
+        gameBoard.makeBoard();
     }
     return {init, updateMessage: _updateMessage, updateScore: _updateScore}
 })()
+
+displayController.init();
 
