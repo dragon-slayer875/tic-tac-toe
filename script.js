@@ -1,6 +1,6 @@
 const gameBoard = (() => {
     const _canvas = document.querySelector('.canvas');
-    let _board = [new Array(3), new Array(3), new Array(3)];
+    let _board = [[0,0,0], [0,0,0], [0,0,0]];
     let _tiles = []
     const _getTiles = () => {
         _tiles = Array.from(document.querySelectorAll('.tile'));
@@ -9,9 +9,47 @@ const gameBoard = (() => {
         const _randomTile = _tiles[Math.floor(Math.random() * _tiles.length)];
         return _randomTile;
     }
+    const _winner = (char) => {
+        const _dialog = document.querySelector("dialog");
+        const _dialogText = document.querySelector(".dtext");
+        if (char == 'Nobody') {
+            _dialogText.textContent = `It's a tie!`;
+        }
+        else {
+            _dialogText.textContent = `${char} wins!`;
+        }
+        _dialog.showModal();
+    }
+    const _checkWin = (char) => {
+        for (let i = 0; i < 3; i++) {
+            if (_board[i].every(elem => elem == char)) {
+                _winner(char);
+                return true;
+            }
+        }
+        for (let i = 0; i < 3; i++) {
+            if (_board.every(elem => elem[i] == char)) {
+                _winner(char);
+                return true;
+            }
+        }
+        if (_board[0][0] == char && _board[1][1] == char && _board[2][2] == char) {
+            _winner(char);
+            return true;
+        }
+        if (_board[0][2] == char && _board[1][1] == char && _board[2][0] == char) {
+            _winner(char);
+            return true;
+        }
+        if (_tiles.length == 0) {
+            _winner('Nobody');
+            return true;
+        }
+    }
     const _moveComputer = (target, row, col, char) => {
         _board[row][col] = char;
         target.textContent = char;
+        _checkWin(char)
         _tiles.splice(_tiles.indexOf(target), 1);
         }
     const _moveHuman = (target, row, col, char) => {
@@ -21,7 +59,7 @@ const gameBoard = (() => {
         _board[row][col] = char;
         target.textContent = char;
         _tiles.splice(_tiles.indexOf(target), 1);
-        if (_tiles.length == 0) {
+        if (_checkWin(char)|| _tiles.length == 0) {
             return;
         }
         const _randomTile = _getRandomTile();
@@ -56,11 +94,11 @@ const gameBoard = (() => {
     }
     const clearBoard = () => {
         for (let i = 0; i < 3; i++) {
-            _board[i] = new Array(3);
+            _board[i] = [0,0,0];
         }
         makeBoard();
     }
-    return {clearBoard, makeBoard};
+    return {clearBoard, makeBoard, _board};
 })();
 
 const player = (playerChar) => {
@@ -76,16 +114,14 @@ const computer = player('O');
 
 const displayController = (() => {
     const _charButtons = document.querySelectorAll('.char');
-    const _message = document.querySelector('.message');
     const _clearBtn = document.querySelector('.reset');
-    const _score = document.querySelector('.score');
-    const _updateMessage = (msg) => {
-        _message.textContent = msg;
-    }
-    const _updateScore = (score) => {
-        _score.textContent = score;
-    }
+    const _dialog = document.querySelector("dialog");
+    const _dialogResetBtn = document.querySelector(".dreset");
     const _addListeners = () => {
+        _dialogResetBtn.addEventListener('click', ()=> {
+            _dialog.close();
+            gameBoard.clearBoard()
+        })
         _clearBtn.addEventListener('click', () => {
             gameBoard.clearBoard();
         })
@@ -103,7 +139,7 @@ const displayController = (() => {
         _addListeners();
         gameBoard.makeBoard();
     }
-    return {init, updateMessage: _updateMessage, updateScore: _updateScore}
+    return {init}
 })()
 
 displayController.init();
