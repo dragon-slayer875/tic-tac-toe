@@ -2,6 +2,7 @@ const gameBoard = (() => {
     const _canvas = document.querySelector('.canvas');
     let _board = [[0,0,0], [0,0,0], [0,0,0]];
     let _tiles = []
+    let _canHumanPlay = true;
     const _getTiles = () => {
         _tiles = Array.from(document.querySelectorAll('.tile'));
     }
@@ -49,15 +50,17 @@ const gameBoard = (() => {
     const _moveComputer = (target, row, col, char) => {
         _board[row][col] = char;
         target.textContent = char;
+        _canHumanPlay = true;
         _checkWin(char)
         _tiles.splice(_tiles.indexOf(target), 1);
         }
     const _moveHuman = (target, row, col, char) => {
-        if (target.textContent) {
+        if (target.textContent || !_canHumanPlay) {
             return;
         }
         _board[row][col] = char;
         target.textContent = char;
+        _canHumanPlay = false;
         _tiles.splice(_tiles.indexOf(target), 1);
         if (_checkWin(char)|| _tiles.length == 0) {
             return;
