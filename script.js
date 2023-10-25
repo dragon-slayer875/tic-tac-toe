@@ -80,6 +80,7 @@ const gameBoard = (() => {
         })
     }
     const makeBoard = () => {
+        _canHumanPlay = true;
         _canvas.innerHTML = '';
         const _tile = document.createElement('button');
         _tile.classList.add('tile');
